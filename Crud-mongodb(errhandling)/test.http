@@ -1,0 +1,25 @@
+###
+GET http://localhost:3000/user/getuser 
+
+###
+POST http://localhost:3000/user/createuser
+Content-Type: application/json
+
+{
+      "id": "6",
+      "name": "Rohit",
+      "email": "rohitasuri023@gmail.com",
+      "phone": "9398516394",
+      "location": "Hyderabad"
+}
+
+###
+PUT http://localhost:3000/user/updateuser/1
+Content-Type: application/json
+
+{
+  "location" : "Nizampet"
+}
+
+###
+DELETE http://localhost:3000/user/deleteuser/6

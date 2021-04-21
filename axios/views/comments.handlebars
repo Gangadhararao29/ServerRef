@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <th>Post Id</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Body</th>
+            </thead>    
+            
+            <tbody>
+                {{#each commentsdata}}
+                <tr>
+                    <td>{{postId}}</td>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                    <td>{{body}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

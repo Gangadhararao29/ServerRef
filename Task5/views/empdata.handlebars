@@ -1,0 +1,172 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  {{!-- DISPLAYING DATA IN A TABLE --}}
+  <div class="container">
+    <h2 class="text-primary my-3"><u>Server Side Grid using Handle bar template</u></h2>
+    <table class="table mt-3 table-striped table-bordered border-primary">
+      <thead>
+        <th>Name</th>
+        <th>Id</th>
+        <th>Employee Salary</th>
+        <th>Age</th>
+      </thead>
+
+      <tbody id="tablebody">
+        {{#each employeesdata.data}}
+        <tr style="display:none;" id="{{@index}}">
+          <td>{{employee_name}}</td>
+          <td>{{id}}</td>
+          <td>{{employee_salary}}</td>
+          <td>{{employee_age}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{!-- PAGINATION RENDERING --}}
+  <div class="container d-flex">
+    <div class="ms-auto">
+      <nav id="navpagination">
+      </nav>
+    </div>
+  </div>
+</body>
+
+{{!-- Script --}}
+<script>
+
+  const rowLength = document.getElementById('tablebody').rows.length;
+  const itemsPerPage = 5;
+  //SET NUMBER OF ITEMS TO DISPLAY AS PER THE PAGE
+  const maxPages = Math.ceil(rowLength / itemsPerPage);
+
+  //DEFAULT RENDERING OF TABLE
+  for (i = 0; i < itemsPerPage; i++) {
+    let element = document.getElementById(i);
+    element.style.display = "table-row";
+  }
+
+  //RENDERING OF PAGINATION TABS
+  pagination = `<ul class="pagination" onclick="pageevent(event)" ><li class="page-item"><a class="page-link" href="#">Previous</a></li>`
+  pagination += `<li class="page-item active" id="p0"><a class="page-link" onclick="display(0)" href="#">1</a></li>`;
+  for (i = 1; i < maxPages; i++) {
+    pagination += `<li class="page-item" id="p${i}"><a class="page-link" onclick="display(${i})" href="#">${i + 1}</a></li>`;
+  }
+  pagination += `
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>`
+
+  document.getElementById('navpagination').outerHTML = pagination;
+//---------------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ //DISPLAYING OF TABLE ACCORDING TO PAGES
+  function display(rowId) {
+
+  //console.log("from display:",rowId)
+
+//SETTING MIN AND MAX PER PAGE
+   let min = (rowId * itemsPerPage)
+   let max = (++rowId * itemsPerPage)
+
+/**
+  //SETTING EVERY ROW DISPLAY TO NONE
+    for (i = 0; i < rowLength; i++) {
+      let element = document.getElementById(i);
+      element.style.display = "none";
+    }
+
+  //SETTING THIER DISPLAY PROPERTY TO TABLE-ROW
+    for (i = min; i < max; i++) {
+      if (i < rowLength) {
+        let element = document.getElementById(i);
+        element.style.display = "table-row";
+      }
+    }
+**/
+    for(i=0;i<rowLength;i++) {
+      //SETTING EVERY ROW DISPLAY TO NONE AND TO TABLE-ROW ACCORDINGLY V2
+      if(i>=min && i<max){
+        let element = document.getElementById(i);
+        element.style.display = "table-row";
+      }
+      else{
+        let element = document.getElementById(i);
+        element.style.display = "none";
+      }
+    }
+
+  }
+
+//PAGINATION STYLES AND PREVIOUS AND NEXT FUNCTIONS
+  function pageevent(e) {
+    var elems = document.querySelector(".active");
+    if (e.target.innerText != "Previous" && e.target.innerText != "Next") {
+      //REMOVING ACTIVE CLASS
+      if (elems !== null) {
+        elems.classList.remove("active");
+      }
+      //ADDING ACTIVE CLASS
+      e.path[1].classList.add("active")
+    }
+    //PREVIOUS BUTTON FUNCTIONALITY
+    if (e.target.innerText == "Previous") {
+      //getting element
+      const temp = document.getElementsByClassName("active")
+      //getting id and slicing for num
+      var pageName = temp[0].id.slice(1, temp[0].id.length)
+      //checking page number
+      if (pageName * 1 >= 1) {
+        pageId = "p" + pageName;
+        const currentpage = document.querySelector(`[id="${pageId}"]`)
+        pageName--;
+        //STYLING  AND CALLING DISPLAY FUNCTIONALITY
+        if (pageName >= 0) {
+          //REMOVING PREVOIUS PAGE ACTIVE CLASS
+          currentpage.classList.remove("active")
+          pageId = "p" + pageName
+          const activepage = document.querySelector(`[id="${pageId}"]`)
+          //console.log(activepage,`[id="${pageId}"]`)
+          //ADDING ACTIVE CLASS TO CURRENT PAGE
+          activepage.classList.add("active")
+          //CALLING DISPLAY FUNCTION
+          display(pageName);
+        }
+      }
+    }
+
+    //NEXT BUTTON FUNCTIONALITY
+
+    if (e.target.innerText == "Next") {
+      const temp = document.getElementsByClassName("active")
+      var pageName = temp[0].id.slice(1, temp[0].id.length)
+      if (pageName * 1 <= maxPages) {
+        pageId = "p" + pageName;
+        const currentpage = document.querySelector(`[id="${pageId}"]`)
+        pageName++;
+        if (pageName < maxPages) {
+          currentpage.classList.remove("active")
+          pageId = "p" + pageName
+          const activepage = document.querySelector(`[id="${pageId}"]`)
+          activepage.classList.add("active")
+          display(pageName);
+        }
+      }
+    }
+  }
+
+
+</script>
+
+</html>

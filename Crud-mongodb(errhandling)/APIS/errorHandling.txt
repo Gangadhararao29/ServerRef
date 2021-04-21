@@ -1,0 +1,47 @@
+Error handling in express app
+
+invalid path 
+-------------
+
+//middleware to deal with invalid pATH
+
+app.use((req,res,next)=>{
+	res.send({message:req.url+"is invalid"})
+)}
+//keep at the last of the server.js
+
+
+syntax error
+------------
+
+try{
+	let userArray = await userCollobj.fin().toArray()
+	// to trace userCollobj.fin syntax error
+	req.send({message:userArray})
+}
+catch(err){
+	res.send({message:err.message}
+)}
+
+express-async-handler
+---------------------
+
+npm install express-async-handler
+
+const errorHandler = require("express-async-handler")
+
+userApiObj.get("/getuser/:id",errorHandler(async(req,res)=>{
+	userCollObj = req.app.get("userCollObj")
+	let user = await userCollObj.findOne({id:req.params.id})
+	res.send({message:user})
+}))
+
+
+//errorHandlingMiddleware
+
+app.use(err,req,res,next)=>{
+	console.log(err)
+	res.send({message:"ERROR OCCURED",
+		reason:err.message
+})
+}

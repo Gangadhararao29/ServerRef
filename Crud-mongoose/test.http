@@ -1,0 +1,38 @@
+###
+GET  http://localhost:3000/product/getproducts
+
+###
+POST http://localhost:3000/product/createproduct
+Content-Type: application/json
+
+{
+    "Id":4,
+    "Name":"Printer",
+    "Price": 6950,
+    "Brand": "HP"
+}
+
+###
+POST http://localhost:3000/product/createproduct
+Content-Type: application/json
+
+{
+    "Id":5,
+    "Name":"Printer",
+    "Price": 6950,
+    "Brand": "HP"
+}
+
+
+###
+PATCH  http://localhost:3000/product/getproduct/5
+Content-Type: application/json
+
+{   
+    "Name": "Headset",
+    "Price" : 1099,
+    "Brand": "Boat"
+}
+
+###
+DELETE http://localhost:3000/product/getproduct/5

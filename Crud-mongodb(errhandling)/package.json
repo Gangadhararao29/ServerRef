@@ -1,0 +1,20 @@
+{
+  "name": "multiple-api",
+  "version": "1.0.0",
+  "description": "Multiple apis and usage",
+  "main": "server.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "author": "CG",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.4"
+  }
+}
